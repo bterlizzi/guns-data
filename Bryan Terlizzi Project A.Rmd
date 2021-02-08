@@ -17,14 +17,14 @@ police <- subset(deaths, deaths$police == "Police Officer")
 
 ### Analysis of Gun Deaths in 2012
 
-_Description_
+_Description_  
 This is an analysis of the gun deaths police officers in 2012. Variables included in the analysis were the intent, sex, age, race, and educational level.
 
 _Analysis_
 
-There were 1402 documented gun-related police deaths in 2012.  The gun deaths of police officers made up approximately 1.4% of all gun-related deaths in the United States. 
+There were 1402 documented gun-related police deaths in 2012.  The gun deaths of police officers made up approximately 1.4% of all gun-related deaths in the United States. The mean age of the deceased police officers was 36 years old (SD = 13).
 
-```{r}
+```{r include=FALSE}
 police_counts <- table(deaths$police)
 police_props <- prop.table(police_counts)
 police_props
@@ -36,13 +36,10 @@ table(police$race)
 table(police$place)
 ```
 
-The mean age of police of the deceased police officers was 36 years old (SD = 13).
-
-```{r}
+```{r echo=FALSE}
 # Calculating mean age of the police officers
 mean_age <- mean(police$age)
-mean_age
-sd(police$age)
+sd_age <- sd(police$age)
 
 # Calculating race and sex proportions
 sex_counts <- table(police$sex)
@@ -54,28 +51,21 @@ race_props <- prop.table(race_counts)
 sex_race_counts <- table(police$sex, police$race)
 sex_race_percents <- 100*prop.table(sex_race_counts)
 
-sex_race_percents
-
 barplot(sex_race_percents,
         xlab = "Race",
         ylab = "Percents",
         legend = c("Female", "Male"),
         args.legend = list(title = "Sex", cex = .7))
-
-race_props
-sex_props
 ```
-
 
 Unsurprisingly, the largest proportion of police deaths were white (51%). Alternatively, the combined proportion of gun-related deaths police officers who were Native Americans/ Native Alaskans or Asian/ Pacific islander was just below 4%. Black and Hispanic officers composed the remaining 25 and 20%, respectively. The proportion of female police officer deaths by gun was around 4.5%, remaining extremely low across all races. In fact, it made up less than 5% of deaths among each different race, with the exception of white police deaths (5.35%). The rest of the sex and race proportion information can be found in Table 1.
 
 ***
 *Table 1. Percentages of police deaths by race and gender
-```{r}
+```{r echo=FALSE}
 sex_race_percents
 
 ```
-
 
 ```{r}
 # This code parses data from the CDC's Multiple Cause of Death datafile for FiveThirtyEight's 
@@ -290,7 +280,7 @@ write.csv(all_guns, file = "full_data_19.csv")
 
 
 ```{r}
-deaths19 <- readr("all_guns_19.Rdata")
+deaths19 <- all_guns
 
 deaths19$police <- factor(deaths19$police, 
                         labels = c("Civilian", "Police Officer"))
